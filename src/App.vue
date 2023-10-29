@@ -1,45 +1,19 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
+    <v-app-bar app dark>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>Tournament organizer</span>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-btn to="/" v-if="!this.$store.state.userIsAuthorized" class="mr-2">Home</v-btn>
+      <v-btn to="/create" v-if="this.$store.state.userIsAuthorized" class="mr-2">Create new tournament</v-btn>
+      <v-btn to="/tournaments" v-if="this.$store.state.userIsAuthorized" class="mr-2">Tournaments</v-btn>
+      <v-btn @click="login" v-if="!this.$store.state.userIsAuthorized">Login</v-btn>
+      <v-btn @click="logout" v-if="this.$store.state.userIsAuthorized">Logout</v-btn>
     </v-app-bar>
-
-    <v-main>
-      <router-view/>
-    </v-main>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
   </v-app>
 </template>
 
@@ -47,9 +21,25 @@
 
 export default {
   name: 'App',
+  components: {
+  },
+  data () {
+    return {
+      clientId: process.env.VUE_APP_AUTH0_CONFIG_CLIENTID
+    }
+  },
+  methods:{
+    logout(){
+      this.$store.dispatch('auth0Logout');
+      console.log('logging out');
+    },
+    login(){
+      this.$store.dispatch('auth0Login');
+      console.log('logging in');
+    }
+  },
+  beforeCreate(){
 
-  data: () => ({
-    //
-  }),
-};
+  }
+}
 </script>
