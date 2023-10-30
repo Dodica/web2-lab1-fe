@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Create from '../views/Create.vue'
 import Edit from '../views/Edit.vue'
 import Tournaments from '../views/Tournaments.vue'
+import Tournament from '../views/Tournament.vue'
 import Auth0Callback from '../views/Auth0Callback.vue'
 import Store from '../store/index.js'
 
@@ -39,6 +40,12 @@ const router = new Router({
       path: '/tournaments',
       name: 'tournaments',
       component: Tournaments,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/tournament',
+      name: 'tournament',
+      component: Tournament,
       meta: { requiresAuth: true }
     },
   ]

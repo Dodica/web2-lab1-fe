@@ -34,6 +34,9 @@
               <strong>Parovi: </strong
               >{{ tournament.pairing }}</v-expansion-panel-content
             >
+                  <v-expansion-panel-content><strong>Link za podjelu: </strong>
+                  <a :href="'http://localhost:8081/tournament?natjecanjeid=' + tournament.natjecanjeid" @click="sharingLink(tournament.natjecanjeid)">http://localhost:8081/tournament?natjecanjeid={{ tournament.natjecanjeid }}</a>
+                  </v-expansion-panel-content>
             <v-expansion-panel-content>
                   <v-btn @click="editTournament(tournament.natjecanjeid)">Edit</v-btn></v-expansion-panel-content>
           </v-expansion-panel>
@@ -63,6 +66,10 @@ export default {
   }),
 
   methods: {
+      sharingLink(natjecanjeid) {
+        this.$store.commit('setNatjecanjeId', natjecanjeid);
+        router.replace('/tournament?natjecanjeid='+natjecanjeid);
+      },
       editTournament(natjecanjeid) {
         this.$store.commit('setNatjecanjeId', natjecanjeid);
         router.replace('/edit');
