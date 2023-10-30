@@ -73,10 +73,7 @@ export default {
     },
   
     created() {
-        this.userid = 1;
-        this.natjecanjeid = 5;
-        console.log("userid: " + this.userid);
-        console.log("natjecanjeid: " + this.natjecanjeid);
+        this.userid = this.$store.getters.userid;
         this.showTournamentsById();
     },
   };
